@@ -11,4 +11,9 @@ class ConsoleWriter implements WriterInterface
         print '[ERROR] ' . $error;
     }
 
+    public function writeResult(string $result): void
+    {
+        print $result;
+    }
+
 }

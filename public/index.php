@@ -18,8 +18,8 @@ $validationResult = $validator->validate($appParameters);
 $writer = new ConsoleWriter();
 
 if ($validationResult->isValid()) {
-    $application = new Application();
-    $application->run($input);
+    $application = new Application($appParameters, $writer);
+    $application->run();
 } else {
     $writer->writeError($validationResult->getError());
 }

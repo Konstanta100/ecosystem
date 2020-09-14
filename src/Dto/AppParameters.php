@@ -39,7 +39,7 @@ class AppParameters
     /**
      * @return int
      */
-    public function getSize(): int
+    public function getSizeSide(): int
     {
         return $this->size;
     }
