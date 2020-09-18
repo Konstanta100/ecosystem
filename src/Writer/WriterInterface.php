@@ -1,7 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
-namespace Writer;
+namespace Ecosystem\Writer;
 
 
 interface WriterInterface
@@ -9,4 +10,9 @@ interface WriterInterface
     public function writeError(string $error): void;
 
     public function writeResult(string $result): void;
+
+    public function writeMessageHerbivoresAreOver():void;
+
+    public function writeMessageStepEnd(): void;
+
 }

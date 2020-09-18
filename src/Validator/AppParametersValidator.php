@@ -24,11 +24,11 @@ class AppParametersValidator
      */
     public function validate(AppParameters $appParameters): ValidationResult
     {
-        if ($appParameters->getSizeSide() > self::SIZE_MAX) {
+        if ($appParameters->getVerticalSize() > self::SIZE_MAX && $appParameters->getHorizontalSize() > self::SIZE_MAX) {
             return new ValidationResult(false, 'Размер поля больше допустимого значения: ' . self::SIZE_MAX);
         }
 
-        if ($appParameters->getSizeSide() < self::SIZE_MIN) {
+        if ($appParameters->getVerticalSize() < self::SIZE_MIN && $appParameters->getHorizontalSize() < self::SIZE_MIN) {
             return new ValidationResult(false, 'Размер поля меньше допустимого значения: ' . self::SIZE_MIN);
         }
 

@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Ecosystem;
 
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use Ecosystem\Factory\AppParametersFactory;
 use Ecosystem\Validator\AppParametersValidator;
-use Writer\ConsoleWriter;
+use Ecosystem\Writer\ConsoleWriter;
 
 $appParametersFactory = new AppParametersFactory();
 $appParameters = $appParametersFactory->create($argv);
@@ -18,8 +19,8 @@ $validationResult = $validator->validate($appParameters);
 $writer = new ConsoleWriter();
 
 if ($validationResult->isValid()) {
-    $application = new Application($appParameters, $writer);
-    $application->run();
+    $application = Application::createDefault();
+    $application->run($appParameters, $writer);
 } else {
     $writer->writeError($validationResult->getError());
 }

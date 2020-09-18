@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Ecosystem\Dto;
 
@@ -14,7 +15,7 @@ class ValidationResult
     /**
      * @var boolean
      */
-    private $isValid ;
+    private $isValid;
 
     /**
      * @var string
