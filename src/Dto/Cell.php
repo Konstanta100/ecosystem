@@ -1,7 +1,7 @@
 <?php
 
-
 namespace Ecosystem\Dto;
+
 
 use Ecosystem\Entity\Creature;
 
@@ -15,7 +15,7 @@ class Cell
     /**
      * @var array
      */
-    private $list_creature;
+    private $list_creature = [];
 
     public function __construct(int $xcor, int $ycor)
     {
@@ -40,4 +40,12 @@ class Cell
         $this->list_creature[] = $creature;
     }
 
+
+    /**
+     * @return array
+     */
+    public function getListCreature() :array
+    {
+        return $this->list_creature;
+    }
 }

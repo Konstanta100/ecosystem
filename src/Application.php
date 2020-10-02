@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ecosystem;
 
 use Ecosystem\Dto\AppParameters;
+use Ecosystem\Service\CounterCreatureService;
 use Ecosystem\Factory\BoardFactory;
 use Ecosystem\Writer\WriterInterface;
 use Ecosystem\Service\CreatureCreationService;
@@ -17,40 +18,56 @@ class Application
     private $boardFactory;
 
     /**
+     * @var WriterInterface
+     */
+    private $writer;
+
+    /**
+     * @var CounterCreatureService
+     */
+
+    private  $counterCreature;
+
+    /**
      * Application constructor.
      * @param BoardFactory $boardFactory
+     * @param WriterInterface $writer
+     * @param CounterCreatureService $counterCreature
      */
-    public function __construct(BoardFactory $boardFactory)
+    public function __construct(BoardFactory $boardFactory, WriterInterface $writer, CounterCreatureService $counterCreature)
     {
         $this->boardFactory = $boardFactory;
+        $this->writer = $writer;
+        $this->counterCreature = $counterCreature;
     }
 
-    public static function createDefault(): self
+    public static function createDefault(WriterInterface $writer): self
     {
         $boardFactory = new BoardFactory(new CreatureCreationService());
+        $counterCreature = new CounterCreatureService();
 
-        return new self($boardFactory);
+        return new self($boardFactory, $writer, $counterCreature);
     }
 
     /**
      * @param AppParameters $appParameters
-     * @param WriterInterface $writer
      * @return void
      */
-    public function run(AppParameters $appParameters, WriterInterface $writer): void
+    public function run(AppParameters $appParameters): void
     {
         $board = $this->boardFactory->create($appParameters);
-        var_dump($board);
-//
+        echo $this->counterCreature->calculateCountHerbivores($board->getListCell());
 //        for ($i = $appParameters->getStepsCount(); $i > 0; $i--) {
-//            if ($board->getCountHerbivorus() > 0) {
+              //$counter_creature =  $board->calculateCountCreatureInBoard();
+              //if($counter_creature->getCountHerbivores())
+//            if ($board->getCountHerbivores() > 0) {
 //                $board->migrateCreatures($board);
 //            } else {
-//                $writer->writeMessageHerbivoresAreOver();
+//                $this->writer->writeMessageHerbivoresAreOver();
 //                return;
 //            }
 //        }
-//        $writer->writeMessageStepEnd();
+       // $this->writer->writeMessageStepEnd();
     }
 
     /**

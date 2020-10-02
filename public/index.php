@@ -19,8 +19,8 @@ $validationResult = $validator->validate($appParameters);
 $writer = new ConsoleWriter();
 
 if ($validationResult->isValid()) {
-    $application = Application::createDefault();
-    $application->run($appParameters, $writer);
+    $application = Application::createDefault($writer);
+    $application->run($appParameters);
 } else {
     $writer->writeError($validationResult->getError());
 }

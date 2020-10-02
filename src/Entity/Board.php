@@ -1,9 +1,8 @@
 <?php
 
+namespace Ecosystem\Entity;
 
-namespace Ecosystem\Dto;
-
-use Ecosystem\Entity\Creature;
+use Ecosystem\Dto\Cell;
 
 class Board
 {
@@ -29,7 +28,8 @@ class Board
 
         for ($y = 1; $y <= $this->getVerticalSizeSide(); $y++) {
             for ($x = 1; $x <= $this->getHorizontalSizeSide(); $x++) {
-                $this->list_cell[$x][$y] = new Cell($x,$y);
+                $coordinate = $this->createKeyCoordinate($x,$y);
+                $this->list_cell[$coordinate] = new Cell($x, $y);
             }
         }
     }
@@ -51,34 +51,14 @@ class Board
     }
 
     /**
-     * @param array $list_cell
-     * @return void
-     */
-    public function setListCell(array $list_cell): void
-    {
-        $this->list_cell = $list_cell;
-    }
-
-    /**
      * @param Creature $creature
      * @return void
      */
-
     public function putCreatureInRandomCell(Creature $creature): void
     {
         $cell = $this->getRandomCell();
         $cell->putCreature($creature);
         $this->changeCell($cell);
-    }
-
-    /**
-     * @return Cell
-     */
-    private function getRandomCell() : Cell
-    {
-        $xcor = array_rand($this->getListCell());
-        $ycor = array_rand($this->getListCell()[$xcor]);
-        return $this->getListCell()[$xcor][$ycor];
     }
 
     /**
@@ -95,6 +75,28 @@ class Board
      */
     private function changeCell(Cell $cell): void
     {
-        $this->list_cell[$cell->getCoordinate()->];
+        $x = $cell->getCoordinate()->getXcor();
+        $y = $cell->getCoordinate()->getYcor();
+        $coordinate = $this->createKeyCoordinate($x,$y);
+        $this->list_cell[$coordinate] = $cell;
+    }
+
+    /**
+     * @return Cell
+     */
+    private function getRandomCell(): Cell
+    {
+        $key_coordinate = array_rand($this->getListCell());
+        return ($this->getListCell()[$key_coordinate]);
+    }
+
+    /**
+     * @param int $x
+     * @param int $y
+     * @return string
+     */
+    private function createKeyCoordinate(int $x, int $y) : string
+    {
+        return $x . '_' . $y;
     }
 }

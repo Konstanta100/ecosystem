@@ -5,7 +5,7 @@ namespace Ecosystem\Factory;
 
 
 use Ecosystem\Dto\AppParameters;
-use Ecosystem\Dto\Board;
+use Ecosystem\Entity\Board;
 use Ecosystem\Service\CreatureCreationService;
 
 class BoardFactory
