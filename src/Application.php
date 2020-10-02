@@ -26,7 +26,7 @@ class Application
      * @var CounterCreatureService
      */
 
-    private  $counterCreature;
+    private $counterCreature;
 
     /**
      * Application constructor.
@@ -34,8 +34,11 @@ class Application
      * @param WriterInterface $writer
      * @param CounterCreatureService $counterCreature
      */
-    public function __construct(BoardFactory $boardFactory, WriterInterface $writer, CounterCreatureService $counterCreature)
-    {
+    public function __construct(
+        BoardFactory $boardFactory,
+        WriterInterface $writer,
+        CounterCreatureService $counterCreature
+    ) {
         $this->boardFactory = $boardFactory;
         $this->writer = $writer;
         $this->counterCreature = $counterCreature;
@@ -55,32 +58,20 @@ class Application
      */
     public function run(AppParameters $appParameters): void
     {
+        $this->writer->writeStartGame($appParameters);
         $board = $this->boardFactory->create($appParameters);
         echo $this->counterCreature->calculateCountHerbivores($board->getListCell());
-//        for ($i = $appParameters->getStepsCount(); $i > 0; $i--) {
-              //$counter_creature =  $board->calculateCountCreatureInBoard();
-              //if($counter_creature->getCountHerbivores())
-//            if ($board->getCountHerbivores() > 0) {
-//                $board->migrateCreatures($board);
-//            } else {
-//                $this->writer->writeMessageHerbivoresAreOver();
-//                return;
-//            }
-//        }
-       // $this->writer->writeMessageStepEnd();
-    }
 
-    /**
-     * @return string
-     */
-    private function getMessageInitApp(): string
-    {
-        return 'Произошло создание новой экосистемы размером: ' . $this->getSizeSide() . 'x' . $this->getSizeSide() . PHP_EOL .
-            'Длительность игры: ' . $this->getCountStep() . ' ходa(ов)' . PHP_EOL .
-            'Растения: ' . $this->getCountPlant() . PHP_EOL .
-            'Травоядные: ' . $this->getCountHerbivorous() . PHP_EOL .
-            'Хищники: ' . $this->getCountPredator() . PHP_EOL .
-            'Крупные хищники: ' . $this->getCountGiant() . PHP_EOL .
-            'Наблюдатели: ' . $this->getCountObserver() . PHP_EOL;
+        for ($i = $appParameters->getStepsCount(); $i > 0; $i--) {
+            $count_herbivores = $this->counterCreature->calculateCountHerbivores($board->getListCell());
+
+            if ($count_herbivores > 0) {
+                $board->migrateCreatures($board);
+            } else {
+                $this->writer->writeHerbivoresAreOver();
+                return;
+            }
+        }
+        $this->writer->writeStepEnd();
     }
 }

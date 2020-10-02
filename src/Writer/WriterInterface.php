@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ecosystem\Writer;
 
+use Ecosystem\Dto\AppParameters;
 
 interface WriterInterface
 {
@@ -11,8 +12,10 @@ interface WriterInterface
 
     public function writeResult(string $result): void;
 
-    public function writeMessageHerbivoresAreOver():void;
+    public function writeHerbivoresAreOver():void;
 
-    public function writeMessageStepEnd(): void;
+    public function writeStepEnd(): void;
+
+    public function writeStartGame(AppParameters $appParameters);
 
 }
