@@ -10,12 +10,12 @@ interface WriterInterface
 {
     public function writeError(string $error): void;
 
-    public function writeResult(string $result): void;
-
-    public function writeHerbivoresAreOver():void;
+    public function writeHerbivoresAreOver(): void;
 
     public function writeStepEnd(): void;
 
-    public function writeStartGame(AppParameters $appParameters);
+    public function writeStartGame(AppParameters $appParameters): void;
+
+    public function writeCountMigration(int $count_migration): void;
 
 }

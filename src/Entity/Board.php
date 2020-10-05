@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Ecosystem\Entity;
 
 use Ecosystem\Dto\Cell;
@@ -28,10 +30,54 @@ class Board
 
         for ($y = 1; $y <= $this->getVerticalSizeSide(); $y++) {
             for ($x = 1; $x <= $this->getHorizontalSizeSide(); $x++) {
-                $coordinate = $this->createKeyCoordinate($x,$y);
+                $coordinate = $this->createKeyCoordinate($x, $y);
                 $this->list_cell[$coordinate] = new Cell($x, $y);
             }
         }
+    }
+
+    /**
+     * Перебор всех клеток на поле и запуск
+     * логики взаимодейтсвия между существами в клетке
+     * @return void
+     */
+    public function migrateCreatures(): void
+    {
+        $current_list_cell = $this->list_cell;
+        foreach ($current_list_cell as $cell_key => $cell) {
+
+        }
+    }
+
+    /**
+     * @param Cell $cell
+     * @return void
+     */
+    private function changeCell(Cell $cell): void
+    {
+        $x = $cell->getCoordinate()->getXcor();
+        $y = $cell->getCoordinate()->getYcor();
+        $coordinate = $this->createKeyCoordinate($x, $y);
+        $this->list_cell[$coordinate] = $cell;
+    }
+
+    /**
+     * @return Cell
+     */
+    private function getRandomCell(): Cell
+    {
+        $key_coordinate = array_rand($this->getListCell());
+        return ($this->getListCell()[$key_coordinate]);
+    }
+
+    /**
+     * @param int $x
+     * @param int $y
+     * @return string
+     */
+    private function createKeyCoordinate(int $x, int $y): string
+    {
+        return $x . '_' . $y;
     }
 
     /**
@@ -67,36 +113,5 @@ class Board
     public function getListCell(): array
     {
         return $this->list_cell;
-    }
-
-    /**
-     * @param Cell $cell
-     * @return void
-     */
-    private function changeCell(Cell $cell): void
-    {
-        $x = $cell->getCoordinate()->getXcor();
-        $y = $cell->getCoordinate()->getYcor();
-        $coordinate = $this->createKeyCoordinate($x,$y);
-        $this->list_cell[$coordinate] = $cell;
-    }
-
-    /**
-     * @return Cell
-     */
-    private function getRandomCell(): Cell
-    {
-        $key_coordinate = array_rand($this->getListCell());
-        return ($this->getListCell()[$key_coordinate]);
-    }
-
-    /**
-     * @param int $x
-     * @param int $y
-     * @return string
-     */
-    private function createKeyCoordinate(int $x, int $y) : string
-    {
-        return $x . '_' . $y;
     }
 }

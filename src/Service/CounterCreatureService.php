@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Ecosystem\Service;
-
 
 use Ecosystem\Dto\Cell;
 use Ecosystem\Entity\Herbivores;

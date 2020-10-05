@@ -1,7 +1,8 @@
 <?php
 
-namespace Ecosystem\Dto;
+declare(strict_types=1);
 
+namespace Ecosystem\Dto;
 
 use Ecosystem\Entity\Creature;
 

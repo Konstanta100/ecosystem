@@ -60,13 +60,13 @@ class Application
     {
         $this->writer->writeStartGame($appParameters);
         $board = $this->boardFactory->create($appParameters);
-        echo $this->counterCreature->calculateCountHerbivores($board->getListCell());
 
-        for ($i = $appParameters->getStepsCount(); $i > 0; $i--) {
+        for ($count_migration = $appParameters->getStepsCount(); $count_migration > 0; $count_migration--) {
             $count_herbivores = $this->counterCreature->calculateCountHerbivores($board->getListCell());
 
             if ($count_herbivores > 0) {
-                $board->migrateCreatures($board);
+                $this->writer->writeCountMigration($count_migration);
+                $board->migrateCreatures();
             } else {
                 $this->writer->writeHerbivoresAreOver();
                 return;
